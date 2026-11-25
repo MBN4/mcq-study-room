@@ -66,21 +66,18 @@ const mlGuides = [
 
 export const SUBJECTS = {
   midterm: {
-    key: 'midterm', name: 'Midterm MCQs', short: 'MID', emoji: '📊',
+    key: 'midterm', name: 'Midterm MCQs', short: 'MID', icon: 'chart',
     tagline: 'Bayes · K-means · Metrics · Statistics',
-    hue: 'var(--c1)',
     questions: expand(midterm), guides: midtermGuides, explanations: midtermExplanations,
   },
   rm: {
-    key: 'rm', name: 'Research Methodology', short: 'RM', emoji: '🔬',
+    key: 'rm', name: 'Research Methodology', short: 'RM', icon: 'flask',
     tagline: 'Paradigms · Reviews · Design · Validity',
-    hue: 'var(--c2)',
     questions: expand(rm), guides: rmGuides, explanations: null,
   },
   ml: {
-    key: 'ml', name: 'Machine Learning', short: 'ML', emoji: '🤖',
+    key: 'ml', name: 'Machine Learning', short: 'ML', icon: 'cpu',
     tagline: 'EDA · Trees · Vision · GenAI',
-    hue: 'var(--c3)',
     questions: expand(ml), guides: mlGuides, explanations: null,
   },
 };

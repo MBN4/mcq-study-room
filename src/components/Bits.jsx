@@ -1,22 +1,6 @@
 import { useEffect } from 'react';
 import { motion, animate, useMotionValue, useTransform } from 'framer-motion';
 
-export function Background() {
-  const float = (dx, dy, d) => ({
-    animate: { x: [0, dx, -dx * 0.6, 0], y: [0, dy, dy * 0.4, 0], scale: [1, 1.12, 0.94, 1] },
-    transition: { duration: d, repeat: Infinity, ease: 'easeInOut' },
-  });
-  return (
-    <div className="bg" aria-hidden>
-      <div className="gridlines" />
-      <motion.div className="blob b1" {...float(80, 60, 22)} />
-      <motion.div className="blob b2" {...float(-70, 90, 26)} />
-      <motion.div className="blob b3" {...float(60, -50, 30)} />
-      <div className="grain" />
-    </div>
-  );
-}
-
 /** Number that counts up/down smoothly when its value changes. */
 export function AnimatedNumber({ value, suffix = '' }) {
   const mv = useMotionValue(value);
@@ -35,16 +19,9 @@ export function ScoreRing({ value, total, size = 120, stroke = 10, label = 'scor
   return (
     <div className="ring" style={{ width: size, height: size }}>
       <svg width={size} height={size}>
-        <defs>
-          <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="var(--c1)" />
-            <stop offset=".55" stopColor="var(--c2)" />
-            <stop offset="1" stopColor="var(--c3)" />
-          </linearGradient>
-        </defs>
         <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--surface-2)" strokeWidth={stroke} />
         <motion.circle
-          cx={size / 2} cy={size / 2} r={r} fill="none" stroke="url(#ringGrad)" strokeWidth={stroke}
+          cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--accent)" strokeWidth={stroke}
           strokeLinecap="round" strokeDasharray={c}
           initial={{ strokeDashoffset: c }}
           animate={{ strokeDashoffset: c * (1 - pct) }}

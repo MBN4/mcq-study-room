@@ -2,10 +2,12 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, LayoutGroup, MotionConfig, motion } from 'framer-motion';
 import { SUBJECTS, GROUP_SIZE } from './data/index.js';
 import { LETTERS, burst, celebrate, shuffledLetters, usePersistentState } from './lib/utils.js';
-import { AnimatedNumber, Background, ScoreRing } from './components/Bits.jsx';
+import { AnimatedNumber, ScoreRing } from './components/Bits.jsx';
 import StudyGuide from './components/StudyGuide.jsx';
 import Quiz, { Navigator } from './components/Quiz.jsx';
-import { Logo, Moon, Sun, Reset } from './components/Icons.jsx';
+import { BarChart, BookOpen, Check, Cpu, Flask, Logo, Moon, Sun, Reset, TrendUp, Trophy, ArrowR } from './components/Icons.jsx';
+
+const SUBJECT_ICONS = { chart: BarChart, flask: Flask, cpu: Cpu };
 
 const emptyPicks = () => Object.fromEntries(Object.keys(SUBJECTS).map((k) => [k, {}]));
 
@@ -126,17 +128,13 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <Background />
       <main className="wrap">
         <motion.header className="header" initial={{ opacity: 0, y: -14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <div className="brand">
-            <motion.div className="logo" initial={{ rotate: -20, scale: 0.6 }} animate={{ rotate: 0, scale: 1 }}
-              transition={{ type: 'spring', stiffness: 260, damping: 14, delay: 0.1 }} whileHover={{ rotate: 8, scale: 1.06 }}>
-              <Logo />
-            </motion.div>
+            <div className="logo"><Logo /></div>
             <div>
               <div className="eyebrow">Interactive exam prep</div>
-              <h1 className="title">MCQ <span className="grad-text">Study Room</span></h1>
+              <h1 className="title">MCQ <span className="accent-text">Study Room</span></h1>
             </div>
           </div>
           <div className="header-actions">
@@ -161,13 +159,14 @@ export default function App() {
             {Object.values(SUBJECTS).map((s, i) => {
               const st = stats(s, allPicks[s.key] ?? {});
               const active = s.key === subject.key;
+              const Icon = SUBJECT_ICONS[s.icon];
               return (
-                <motion.button key={s.key} className="subject" style={{ '--accent': s.hue }} onClick={() => selectSubject(s.key)}
+                <motion.button key={s.key} className="subject" onClick={() => selectSubject(s.key)}
                   initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 * i + 0.1 }}
                   whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }} aria-pressed={active}>
                   {active && <motion.div layoutId="subject-active" className="active-bg" transition={{ type: 'spring', stiffness: 380, damping: 32 }} />}
                   <div className="subject-top">
-                    <span className="subject-emoji">{s.emoji}</span>
+                    <span className="subject-icon"><Icon /></span>
                     <span className="subject-badge">{s.questions.length} Q</span>
                   </div>
                   <div className="subject-text">
@@ -191,7 +190,7 @@ export default function App() {
           </span>
         </div>
         <LayoutGroup id="groups">
-          <nav className="groups" style={{ '--accent': subject.hue }}>
+          <nav className="groups">
             {Array.from({ length: groupCount }, (_, k) => {
               const gs = Math.min(GROUP_SIZE, total - k * GROUP_SIZE);
               const st = stats(subject, picks, k * GROUP_SIZE, k * GROUP_SIZE + gs);
@@ -202,7 +201,7 @@ export default function App() {
                   {k === g && <motion.div layoutId="group-active" className="active-bg" transition={{ type: 'spring', stiffness: 400, damping: 34 }} />}
                   {st.answered === gs && <span className="done-dot" />}
                   <strong>Group {k + 1}</strong>
-                  <span>{st.answered}/{gs} · {st.correct} ✓</span>
+                  <span>{st.answered}/{gs} · {st.correct} <Check /></span>
                 </motion.button>
               );
             })}
@@ -254,7 +253,7 @@ export default function App() {
               <div style={{ display: 'grid', placeItems: 'center' }}>
                 <ScoreRing value={modal.correct} total={modal.size} size={132} label="score" />
               </div>
-              <h3>{modal.correct / modal.size >= 0.85 ? 'Outstanding! 🎉' : modal.correct / modal.size >= 0.6 ? 'Nice work! 💪' : 'Keep practising 📚'}</h3>
+              <h3>{modal.correct / modal.size >= 0.85 ? <><Trophy /> Outstanding!</> : modal.correct / modal.size >= 0.6 ? <><TrendUp /> Nice work!</> : <><BookOpen /> Keep practising</>}</h3>
               <p>{subject.name} · Group {modal.group + 1}{modal.final ? ' — end of subject' : ''}</p>
               <div className="modal-stats">
                 <div><b>{modal.correct}</b><span>Correct</span></div>
@@ -264,7 +263,7 @@ export default function App() {
               <div className="modal-actions">
                 <button className="btn" onClick={resetGroup}><Reset /> Retry group</button>
                 {modal.group < groupCount - 1 ? (
-                  <button className="btn primary" onClick={() => { setModal(null); selectGroup(modal.group + 1); }}>Next group →</button>
+                  <button className="btn primary" onClick={() => { setModal(null); selectGroup(modal.group + 1); }}>Next group <ArrowR /></button>
                 ) : (
                   <button className="btn primary" onClick={() => setModal(null)}>Done</button>
                 )}
@@ -282,7 +281,7 @@ function ScoreRingMini({ value, total }) {
   return (
     <svg width="26" height="26" viewBox="0 0 26 26" style={{ transform: 'rotate(-90deg)' }} aria-hidden>
       <circle cx="13" cy="13" r={r} fill="none" stroke="var(--surface-2)" strokeWidth="4" />
-      <motion.circle cx="13" cy="13" r={r} fill="none" stroke="var(--c2)" strokeWidth="4" strokeLinecap="round"
+      <motion.circle cx="13" cy="13" r={r} fill="none" stroke="var(--accent)" strokeWidth="4" strokeLinecap="round"
         strokeDasharray={c} initial={false} animate={{ strokeDashoffset: c * (1 - (total ? value / total : 0)) }} />
     </svg>
   );

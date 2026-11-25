@@ -16,7 +16,7 @@ export default function StudyGuide({ subject, group, guide, range, onStart, answ
       exit={{ opacity: 0, y: -16, scale: 0.98 }}
       transition={{ type: 'spring', stiffness: 220, damping: 26 }}
     >
-      <div className="kicker grad-text">{subject.name} · Group {group + 1} · Study first</div>
+      <div className="kicker accent-text">{subject.name} · Group {group + 1} · Study first</div>
       <h2>{guide?.title ?? `Group ${group + 1}`}</h2>
       <p className="study-intro">{guide?.intro ?? 'Review the key ideas for this group before attempting the questions.'}</p>
 

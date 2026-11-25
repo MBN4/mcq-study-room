@@ -33,7 +33,7 @@ export function shuffledLetters(seedStr) {
 }
 
 const reduced = () => typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-const COLORS = ['#8b5cf6', '#ec4899', '#f59e0b', '#22d3ee', '#34d399'];
+const COLORS = ['#4f46e5', '#6366f1', '#818cf8', '#c7d2fe'];
 
 export function burst(el) {
   if (reduced()) return;
