@@ -12,4 +12,10 @@ export const Reset = (p) => <svg {...base} {...p}><path d="M3 12a9 9 0 1 0 3-6.7
 export const Flame = (p) => <svg {...base} {...p}><path d="M12 22c4 0 7-2.7 7-7 0-4-3-6-4-10-2 2-3 4-3 6-1-1-2-2-2-4-2 2-5 5-5 8 0 4.3 3 7 7 7z" /></svg>;
 export const Play = (p) => <svg {...base} {...p}><path d="M7 5l12 7-12 7z" fill="currentColor" /></svg>;
 export const Info = (p) => <svg {...base} {...p}><circle cx="12" cy="12" r="9" /><path d="M12 8h.01M11 12h1v5h1" /></svg>;
-export const Logo = (p) => <svg {...base} stroke="#fff" strokeWidth={2.6} {...p}><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>;
+export const Logo = (p) => <svg {...base} strokeWidth={2.2} {...p}><path d="M22 10L12 5 2 10l10 5 10-5z" /><path d="M6 12v5c3 2 9 2 12 0v-5" /></svg>;
+export const BarChart = (p) => <svg {...base} {...p}><path d="M3 3v18h18" /><path d="M8 17v-5M13 17V8M18 17v-8" /></svg>;
+export const Flask = (p) => <svg {...base} {...p}><path d="M9 3h6M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3" /><path d="M7 15h10" /></svg>;
+export const Cpu = (p) => <svg {...base} {...p}><rect x="5" y="5" width="14" height="14" rx="2" /><rect x="9" y="9" width="6" height="6" rx="1" /><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" /></svg>;
+export const Trophy = (p) => <svg {...base} {...p}><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z" /><path d="M7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3" /></svg>;
+export const TrendUp = (p) => <svg {...base} {...p}><path d="M3 17l6-6 4 4 8-8" /><path d="M15 7h6v6" /></svg>;
+export const BookOpen = (p) => <svg {...base} {...p}><path d="M2 5h6a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H2z" /><path d="M22 5h-6a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h7z" /></svg>;
