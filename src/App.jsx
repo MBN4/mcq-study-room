@@ -96,6 +96,24 @@ export default function App() {
     setModal(null);
   };
 
+  // Clear wrong answers in this group and jump to the first one, so students can re-attempt only their mistakes.
+  const wrongInGroup = [];
+  for (let i = start; i < start + size; i++) if (picks[i] && picks[i] !== subject.questions[i].a) wrongInGroup.push(i);
+  const retryWrong = () => {
+    if (!wrongInGroup.length) return;
+    setAllPicks((prev) => {
+      const next = { ...prev[subject.key] };
+      wrongInGroup.forEach((i) => delete next[i]);
+      return { ...prev, [subject.key]: next };
+    });
+    setRevealed({});
+    setDirection(1);
+    setWithin(wrongInGroup[0] - start);
+    setView('quiz');
+    setStreak(0);
+    setModal(null);
+  };
+
   const revealKey = `${subject.key}-${index}`;
   const toggleReveal = () => setRevealed((r) => ({ ...r, [revealKey]: !r[revealKey] }));
 
@@ -213,7 +231,10 @@ export default function App() {
           <span className="section-label">
             {subject.short} · Group {g + 1} · Q{start + 1}–{start + size}
           </span>
-          <span className="section-meta">{gStats.answered}/{size} answered · {gStats.correct} correct</span>
+          <span className="section-meta">
+            {gStats.answered}/{size} answered · {gStats.correct} correct
+            {gStats.answered > 0 && <> · {Math.round((gStats.correct / gStats.answered) * 100)}%</>}
+          </span>
         </div>
         <div className="track" style={{ margin: '0 0 18px' }}>
           <motion.div className="fill" initial={false} animate={{ width: `${(gStats.answered / size) * 100}%` }} transition={{ type: 'spring', stiffness: 90, damping: 18 }} />
@@ -234,7 +255,8 @@ export default function App() {
                 explanation={explanation}
               />
               <Navigator subject={subject} start={start} size={size} within={w} picks={picks}
-                onJump={(k) => { setDirection(k > w ? 1 : -1); setWithin(k); }} onReset={resetGroup} />
+                onJump={(k) => { setDirection(k > w ? 1 : -1); setWithin(k); }} onReset={resetGroup}
+                wrongCount={wrongInGroup.length} onRetryWrong={retryWrong} />
             </motion.div>
           )}
         </AnimatePresence>
@@ -263,6 +285,9 @@ export default function App() {
               </div>
               <div className="modal-actions">
                 <button className="btn" onClick={resetGroup}><Reset /> Retry group</button>
+                {wrongInGroup.length > 0 && modal.group === g && (
+                  <button className="btn" onClick={retryWrong}>Retry {wrongInGroup.length} wrong</button>
+                )}
                 {modal.group < groupCount - 1 ? (
                   <button className="btn primary" onClick={() => { setModal(null); selectGroup(modal.group + 1); }}>Next group →</button>
                 ) : (

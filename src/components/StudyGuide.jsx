@@ -21,9 +21,12 @@ export default function StudyGuide({ subject, group, guide, range, onStart, answ
       <p className="study-intro">{guide?.intro ?? 'Review the key ideas for this group before attempting the questions.'}</p>
 
       <motion.div className="blocks" variants={container} initial="hidden" animate="show">
-        {(guide?.blocks ?? []).map(([title, body, formula], i) => (
+        {(guide?.blocks ?? []).map(([title, body, formula, covers], i) => (
           <motion.article className="block" key={title + i} variants={item} whileHover={{ x: 4 }}>
-            <h3><span className="num">{String(i + 1).padStart(2, '0')}</span>{title}</h3>
+            <h3>
+              <span className="num">{String(i + 1).padStart(2, '0')}</span>{title}
+              {covers ? <span className="covers" title="Questions this section prepares you for">{covers}</span> : null}
+            </h3>
             <p>{body}</p>
             {formula ? <div className="formula">{formula}</div> : null}
           </motion.article>

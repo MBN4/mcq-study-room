@@ -66,7 +66,7 @@ const mlGuides = [
 
 export const SUBJECTS = {
   midterm: {
-    key: 'midterm', name: 'Midterm MCQs', short: 'MID', emoji: '📊',
+    key: 'midterm', name: 'Stats', short: 'STATS', emoji: '📊',
     tagline: 'Bayes · K-means · Metrics · Statistics',
     hue: 'var(--c1)',
     questions: expand(midterm), guides: midtermGuides, explanations: midtermExplanations,

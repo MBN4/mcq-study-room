@@ -129,7 +129,7 @@ export default function Quiz({
           >
             {answered ? (correct ? <Check /> : <X />) : <Info />}
             {answered
-              ? correct ? 'Correct — nicely done!' : 'Not quite. Reveal the answer and read the explanation.'
+              ? correct ? 'Correct — nicely done!' : 'Not quite. Reveal the answer, read the explanation, or revisit the guide (G).'
               : 'Pick an answer for instant feedback — or press 1–4 / A–D.'}
           </motion.div>
 
@@ -170,7 +170,7 @@ export default function Quiz({
   );
 }
 
-export function Navigator({ subject, start, size, within, picks, onJump, onReset }) {
+export function Navigator({ subject, start, size, within, picks, onJump, onReset, wrongCount, onRetryWrong }) {
   return (
     <motion.div className="glass navigator" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
       <div className="nav-head">
@@ -179,6 +179,11 @@ export function Navigator({ subject, start, size, within, picks, onJump, onReset
           <span><i style={{ background: 'var(--good)' }} />Correct</span>
           <span><i style={{ background: 'var(--bad)' }} />Wrong</span>
           <span><i style={{ background: 'var(--surface-2)', border: '1px solid var(--border-strong)' }} />Open</span>
+          {wrongCount > 0 && (
+            <button className="btn small ghost" onClick={onRetryWrong} title="Clear only the questions you got wrong and try them again">
+              <Reset /> Retry {wrongCount} wrong
+            </button>
+          )}
           <button className="btn small ghost" onClick={onReset} title="Clear answers in this group"><Reset /> Reset group</button>
         </div>
       </div>

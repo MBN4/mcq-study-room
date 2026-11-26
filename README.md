@@ -6,7 +6,7 @@ An animated React study app for exam prep: read a study guide for each group, th
 
 | Subject | Questions | Groups |
 | --- | --- | --- |
-| Midterm MCQs (Bayes, K-means, metrics, statistics) | 200 | 4 |
+| Stats (Bayes, K-means, metrics, statistics) | 200 | 4 |
 | Research Methodology | 500 | 10 |
 | Machine Learning | 100 | 2 |
 
@@ -14,7 +14,7 @@ An animated React study app for exam prep: read a study guide for each group, th
 
 - Study guide before each group of 50 questions, with formula callouts
 - Instant feedback: correct answers pop with confetti, wrong answers shake
-- Reveal answer plus an explanation for every question (detailed explanations for the Midterm set)
+- Reveal answer plus an explanation for every question (detailed explanations for the Stats set)
 - Question map showing correct, wrong and open questions; click any number to jump to it
 - Streak counter, animated progress bars and a score ring at the end of each group
 - Optional shuffling of answer options, stable per question
@@ -49,4 +49,4 @@ Question banks live in `src/data/` as compact rows:
 ["Question text", "Option A", "Option B", "Option C", "Option D", "B"]
 ```
 
-Study guides and subject metadata are in `src/data/index.js`. Midterm explanations are in `src/data/midtermExtras.js`.
+Study guides and subject metadata are in `src/data/index.js`. Stats explanations and guides are in `src/data/midtermExtras.js`.
