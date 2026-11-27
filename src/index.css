@@ -98,7 +98,7 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .stat-pill b { color: var(--text); font-weight: 700; }
 
 /* Subject picker */
-.subjects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+.subjects { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
 .subject {
   position: relative; text-align: left; padding: 16px 16px 14px; border-radius: 18px; cursor: pointer;
   border: 1px solid var(--border); background: var(--surface); overflow: hidden; isolation: isolate;
@@ -263,6 +263,9 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .foot .kbd { margin: 0 2px; }
 
 /* Responsive */
+@media (max-width: 980px) {
+  .subjects { grid-template-columns: repeat(2, 1fr); }
+}
 @media (max-width: 720px) {
   .subjects { grid-template-columns: 1fr; gap: 8px; }
   .subject { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; padding: 12px 14px; }
