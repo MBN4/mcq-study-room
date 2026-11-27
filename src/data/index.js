@@ -1,6 +1,7 @@
 import midterm from './midterm.js';
 import rm from './rm.js';
 import ml from './ml.js';
+import dm from './dm.js';
 import { midtermExplanations, midtermGuides } from './midtermExtras.js';
 
 const expand = (rows) =>
@@ -64,6 +65,28 @@ const mlGuides = [
   ]),
 ];
 
+const dmGuides = [
+  g('KDD, data types, mining tasks and basic statistics', 'Study guide for Data Mining questions 1–50.', [
+    ['Knowledge discovery (KDD)', 'Data mining, also called knowledge discovery in databases (KDD), extracts patterns that are valid, novel, potentially useful and understandable. The data mining step outputs patterns, which are then interpreted and evaluated to become knowledge. The market-basket example (pizza, beer, chips) is about finding items frequently bought together. The three "V" challenges are Volume, Variety and Velocity (a data stream versus static data is Velocity); Veracity is not one of the three.'],
+    ['Types of data', 'Record data: rows are data objects, columns are attributes (characteristics of an object). Market baskets are transaction data. A document–term matrix stores how often each term occurs in a document. m objects with n numeric attributes form an m × n data matrix (each object is a point in n-D space). Temporal data covers time series and sequence data (e.g. Night sweat → Fever → Anemia). Interval relations: A(1–5) overlaps C(3–12); C(3–12) contains B(4–9). Trajectory data (hurricane paths, RFID) is sampled as <latitude, longitude, time>. Social networks are graph data, XML is semi-structured, reviews and tweets are unstructured.'],
+    ['Mining tasks', 'Clustering finds natural groups in unlabeled data; classification learns to predict a class from pre-labeled instances (spam filtering). Association rules are descriptive; regression, prediction and time-series analysis are predictive. Confidence(X ⇒ Y) = support(X ∪ Y) / support(X): Milk ⇒ Bread = 4/6 ≈ 66%. Statistics is more theory-based and hypothesis-testing; data mining/KDD covers the whole process including cleaning and visualization. Summarization describes a group with natural language and graphics; motif discovery finds repeated patterns in a time series.', 'confidence(X⇒Y) = count(X∪Y) / count(X)'],
+    ['Attribute types and central tendency', 'Nominal: categories without order (hair color). Asymmetric binary: outcomes of unequal importance (medical test positive/negative). Ordinal: ordered categories (small/medium/large). Interval: equal units, no true zero (Celsius). Ratio: true zero (Kelvin — 10 K is twice 5 K). Zip codes are discrete. Resolution means patterns depend on scale. With an even count, the median is the average of the two middle values. Moderately skewed data: mean − mode ≈ 3 × (mean − median). Positive skew: mode < median < mean.', 'mean − mode ≈ 3 × (mean − median)'],
+    ['Dispersion and the normal curve', 'IQR = Q3 − Q1. The five-number summary is min, Q1, median, Q3, max. Outliers lie beyond 1.5 × IQR from the quartiles (Q1 = 20, Q3 = 40 → upper fence 40 + 30 = 70). Normal distribution: μ ± σ ≈ 68%, μ ± 2σ ≈ 95%, μ ± 3σ ≈ 99.7%. In a histogram the bar area denotes the value and bars are adjacent; histograms can reveal differences that identical boxplots hide.', 'upper fence = Q3 + 1.5 × IQR'],
+  ]),
+  g('Visualization, similarity, data quality, cleaning and integration', 'Study guide for Data Mining questions 51–100.', [
+    ['Plots and visualization techniques', 'Quantile plot: f_i means about 100·f_i % of the data are ≤ x_i. Q-Q plot compares quantiles of two distributions to spot a shift. Scatter plots give a first look at bivariate data. Categories: pixel-oriented (circle segments save space and show dimension connections), geometric projection (scatterplot matrix, parallel coordinates — each item is a polyline crossing every axis), icon-based (Chernoff faces, stick figures with a body and four limbs), and hierarchical (dimensional stacking, hard beyond ~9 dimensions; tree-maps partition the screen alternately in x and y). Tag clouds show importance by font size or color.'],
+    ['Similarity and distance', 'Similarity is higher for more alike objects; dissimilarity is lower. A dissimilarity matrix is single-mode and triangular. Nominal simple matching: d = (p − m) / p (5 variables, 2 matches → 0.6). Asymmetric binary Jaccard = q / (q + r + s) (2/4 = 0.5). Minkowski h = 1 is Manhattan, h = 2 Euclidean, h → ∞ supremum. For (1,2) and (4,6): Manhattan 7, Euclidean 5, supremum 4. Triangle inequality: d(i,j) ≤ d(i,k) + d(k,j). Hamming distance counts differing bits. Ordinal ranks map to (r − 1) / (M − 1). Cosine similarity = dot product / product of lengths.', 'd = (p − m)/p · Jaccard = q/(q+r+s) · z = (x − μ)/σ'],
+    ['Data quality and cleaning', 'Quality measures: accuracy, completeness, consistency, timeliness, believability, interpretability (not scalability). Preprocessing tasks: cleaning, integration, reduction, transformation and discretization. Salary = "−10" is noisy data; "Jan. 1" as everyone\'s birthday is disguised missing data. Ignore a tuple when its class label is missing; filling with the class-wise mean is smarter than the global mean. Binning: bin 4, 8, 9, 15 → mean 9; by boundaries, 24 in (21, 21, 24, 25) → 25. Equal-width with range 4–34 and N = 3 gives width 10; outliers and skew hurt it. Data scrubbing uses simple domain knowledge (postal codes, spell-check).', 'width = (max − min) / N'],
+    ['Integration and correlation', 'Schema integration matches A.cust-id with B.cust-#; entity identification recognizes Bill Clinton = William Clinton. Redundancy is found via correlation and covariance analysis. Chi-square: expected = row total × column total / grand total (450 × 300 / 1500 = 90); χ² = Σ (observed − expected)² / expected ≈ 507.93 for the sci-fi/chess table — larger means more likely related. Correlation does not imply causality. r < 0 means negative correlation; positive covariance means the values tend to rise together.', 'χ² = Σ (O − E)² / E'],
+    ['Starting data reduction', 'Data reduction yields a much smaller representation with (almost) the same analytical results. The curse of dimensionality: as dimensions grow, data become sparse and distances less meaningful. PCA is a dimensionality reduction technique; the discrete wavelet transform applies a smoothing and a difference function to pairs of values.'],
+  ]),
+  g('Data reduction, transformation and discretization', 'Study guide for Data Mining questions 101–120.', [
+    ['Reduction techniques', 'PCA projects onto the eigenvectors of the covariance matrix. Price and sales tax are redundant attributes. d attributes give 2^d possible subsets. Parametric numerosity reduction assumes a model and stores only its parameters (linear regression via least squares). Clustering helps when data are clustered, not smeared. Stratified sampling suits skewed data; with replacement (SRSWR) an object can be picked again. The lowest data-cube level is the base cuboid. String compression is typically lossless.'],
+    ['Normalization', 'Normalization is a transformation method. Min-max: (73,000 − 12,000) / (98,000 − 12,000) ≈ 0.716. Z-score: (73,600 − 54,000) / 16,000 = 1.225. Decimal scaling divides by 10^j with j the smallest integer making max(|v\'|) < 1.', "v' = (v − min)/(max − min) · v' = (v − μ)/σ · v' = v/10^j"],
+    ['Discretization and concept hierarchies', 'Decision-tree analysis is supervised and top-down; chi-merge is bottom-up, merging neighbouring intervals with low chi-square values; K-means clustering gives better discretization than equal-width or equal-frequency binning. Concept hierarchy example: street < city < state < country. The attribute with the most distinct values goes at the lowest level — except for cases like weekday, month, quarter, year.'],
+  ]),
+];
+
 export const SUBJECTS = {
   midterm: {
     key: 'midterm', name: 'Stats', short: 'STATS', emoji: '📊',
@@ -82,6 +105,12 @@ export const SUBJECTS = {
     tagline: 'EDA · Trees · Vision · GenAI',
     hue: 'var(--c3)',
     questions: expand(ml), guides: mlGuides, explanations: null,
+  },
+  dm: {
+    key: 'dm', name: 'Data Mining', short: 'DM', emoji: '⛏️',
+    tagline: 'KDD · Similarity · Preprocessing · Reduction',
+    hue: 'var(--c4)',
+    questions: expand(dm), guides: dmGuides, explanations: null,
   },
 };
 

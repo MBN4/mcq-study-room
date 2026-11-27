@@ -2,13 +2,14 @@
 
 An animated React study app for exam prep: read a study guide for each group, then practise one question at a time with instant feedback.
 
-**800 questions across three subjects**
+**920 questions across four subjects**
 
 | Subject | Questions | Groups |
 | --- | --- | --- |
 | Stats (Bayes, K-means, metrics, statistics) | 200 | 4 |
 | Research Methodology | 500 | 10 |
 | Machine Learning | 100 | 2 |
+| Data Mining (KDD, similarity, preprocessing, reduction) | 120 | 3 |
 
 ## Features
 
